@@ -1,5 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+	$secret = $_GET['secret'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,6 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 </head>
 <body>
 	<form action="./" method="post">
+		<input type="hidden" name="secret" value="<?php echo $secret ?>">
 		<input type="submit" name="action" value="Boot">
 		<input type="submit" name="action" value="Reboot">
 	</form>
@@ -17,13 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 </html>
 <?php
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-	$secret = 'somesecret';
+	$secret = $_GET['secret'];
 	$rpi = "192.168.1.???";
 	if(isset($_POST['action'])) {
 		if ($_POST['action'] === 'Boot') {
-			echo file_get_contents("http://" . $rpi . "/boot?secret" . $secret);
+			echo file_get_contents("http://" . $rpi . "/boot?secret=" . $secret);
 		} else if ($_POST['action'] === 'Reboot') {
-			echo file_get_contents("http://" . $rpi . "/reboot?secret" . $secret);
+			echo file_get_contents("http://" . $rpi . "/reboot?secret=" . $secret);
 		}
 	} else {
 		echo "no action specified";
