@@ -33,8 +33,8 @@ app = Flask(__name__)
 secret = 'somesecret'
 
 # pin numbering: use GPIOXX number instead of board pin number
-relayBoot = DigitalOutputDevice(17) # board pin number 11
-relayReboot = DigitalOutputDevice(27) # 13
+relayBoot = DigitalOutputDevice(17, active_high=False, initial_value=False) # board pin number 11
+relayReboot = DigitalOutputDevice(27, active_high=False, initial_value=False) # 13
 
 @app.route('/')
 def hello_world():
@@ -61,3 +61,7 @@ def reboot():
         return "OK"
     else:
         return "secret not correct"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
+ 
